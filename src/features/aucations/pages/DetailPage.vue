@@ -63,7 +63,7 @@ async function cancelBid() {
 <template>
   <div class="detail-page">
     <button class="back-link" type="button" @click="router.push({ name: 'home' })"><ArrowLeft :size="16" /> Kembali ke lelang</button>
-    <div v-if="error" class="state-card state-card--error"><strong>Lelang tidak dapat dibuka.</strong><span>{{ error }}</span><button class="button button--secondary" @click="load">Coba lagi</button></div>
+    <div v-if="error" class="state-card state-card--error"><h1>Lelang tidak dapat dibuka.</h1><span>{{ error }}</span><button class="button button--secondary" @click="load">Coba lagi</button></div>
     <div v-else-if="auctions.isLoading || !item" class="detail-skeleton"><span /><span /><span /></div>
     <template v-else>
       <div class="detail-layout">

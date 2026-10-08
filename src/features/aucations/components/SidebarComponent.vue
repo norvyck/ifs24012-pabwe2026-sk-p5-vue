@@ -20,7 +20,7 @@ const links = [
 
 <template>
   <aside class="sidebar">
-    <RouterLink class="brand" :to="{ name: 'home' }">
+    <RouterLink class="brand" :to="{ name: 'home' }" aria-label="Bidly, jelajahi lelang">
       <span class="brand-mark"><Gavel :size="19" :stroke-width="2.6" /></span>
       <span>bidly<span class="brand-period">.</span></span>
     </RouterLink>
@@ -32,6 +32,7 @@ const links = [
         :to="link.to"
         class="side-nav__link"
         :class="{ 'is-active': route.name === link.to.name }"
+        :aria-label="link.label"
       >
         <component :is="link.icon" :size="18" :stroke-width="1.8" />
         <span>{{ link.label }}</span>

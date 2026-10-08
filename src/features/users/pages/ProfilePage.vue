@@ -87,7 +87,7 @@ async function savePassword() {
   <section class="profile-page">
     <div class="page-intro page-intro--profile"><span class="eyebrow"><UserRound :size="14" /> RUANG PERSONAL</span><h1>Profil <em>kamu.</em></h1><p>Atur informasi akun dan pastikan semuanya tetap terkini.</p></div>
     <div class="profile-layout">
-      <aside class="profile-card">
+      <div class="profile-card">
         <div class="profile-card__banner"><span>MEMBER<br />BIDLY</span></div>
         <div class="profile-card__identity">
           <div class="profile-avatar">
@@ -100,7 +100,7 @@ async function savePassword() {
           <small><Check :size="13" /> Anggota komunitas</small>
         </div>
         <div class="profile-card__meta"><span>AKUN TERDAFTAR</span><strong>{{ users.profile?.created_at ? new Date(users.profile.created_at).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : 'Bidly member' }}</strong></div>
-      </aside>
+      </div>
       <div class="profile-forms">
         <form class="settings-card" @submit.prevent="saveProfile">
           <header><div><span class="eyebrow">INFORMASI DASAR</span><h2>Detail akun</h2></div><UserRound :size="18" /></header>

@@ -20,7 +20,7 @@ const links = [
 
 <template>
   <header class="topbar">
-    <RouterLink class="topbar__mobile-brand" :to="{ name: 'home' }"><span class="brand-mark"><Gavel :size="16" /></span>bidly<span class="brand-period">.</span></RouterLink>
+    <RouterLink class="topbar__mobile-brand" :to="{ name: 'home' }" aria-label="Bidly, jelajahi lelang"><span class="brand-mark"><Gavel :size="16" /></span>bidly<span class="brand-period">.</span></RouterLink>
     <div class="topbar__crumb"><span>Marketplace</span><span class="crumb-separator">/</span><strong>{{ links.find((link) => link.name === route.name)?.label || 'Detail lelang' }}</strong></div>
     <div class="topbar__actions">
       <span class="topbar__welcome">Selamat datang kembali, <strong>{{ userName.split(' ')[0] }}</strong></span>

@@ -80,16 +80,17 @@ async function submit() {
   <Teleport to="body">
     <div v-if="open" class="modal-backdrop" @click.self="emit('close')">
       <section class="modal-panel modal-panel--wide" role="dialog" aria-modal="true" aria-labelledby="auction-form-title">
-        <header class="modal-header">
+        <div class="modal-header">
           <div><span class="eyebrow">BIDLY MARKETPLACE</span><h2 id="auction-form-title">{{ isEditing ? 'Perbarui lelang' : 'Mulai lelang baru' }}</h2></div>
           <button class="icon-button" type="button" aria-label="Tutup" @click="emit('close')"><X :size="19" /></button>
-        </header>
+        </div>
         <form class="modal-form" @submit.prevent="submit">
           <label class="field-label">Nama barang
             <input v-model="title" class="form-control" maxlength="100" placeholder="Contoh: Kamera analog Canon AE-1" required />
           </label>
-          <label class="field-label">Deskripsi barang</label>
-          <MarkdownEditor v-model="description" />
+          <div class="field-label"><span id="auction-description-label">Deskripsi barang</span>
+            <MarkdownEditor v-model="description" label="Deskripsi barang" />
+          </div>
           <div class="form-grid">
             <label class="field-label">Harga pembuka (Rupiah)
               <input v-model="startBid" class="form-control" type="number" min="1000" step="1000" placeholder="250000" required />

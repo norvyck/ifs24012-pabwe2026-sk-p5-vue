@@ -27,6 +27,11 @@ const router = createRouter({
   ],
 })
 
+router.afterEach((to) => {
+  const canonical = document.querySelector('link[rel="canonical"]')
+  if (canonical) canonical.href = new URL(to.path, window.location.origin).href
+})
+
 router.beforeEach((to) => {
   const auth = useAuthStore()
   if (to.meta.requiresAuth && !auth.isAuthenticated) return { name: 'login' }
