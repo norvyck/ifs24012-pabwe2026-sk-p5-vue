@@ -33,7 +33,7 @@ async function submit() {
   <div class="auth-card">
     <div class="auth-card__icon"><Gavel :size="21" /></div>
     <span class="eyebrow">SENANG MELIHATMU KEMBALI</span>
-    <h2>Masuk ke akunmu</h2>
+    <h1>Masuk ke akunmu</h1>
     <p class="auth-card__subtitle">Lanjutkan berburu barang istimewa.</p>
     <form class="auth-fields" @submit.prevent="submit">
       <label class="field-label">Alamat email

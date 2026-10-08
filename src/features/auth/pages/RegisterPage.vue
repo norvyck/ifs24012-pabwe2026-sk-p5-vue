@@ -39,7 +39,7 @@ async function submit() {
   <div class="auth-card auth-card--register">
     <div class="auth-card__icon"><Gavel :size="21" /></div>
     <span class="eyebrow">MULAI PERJALANANMU</span>
-    <h2>Buat akun Bidly</h2>
+    <h1>Buat akun Bidly</h1>
     <p class="auth-card__subtitle">Satu akun untuk semua barang istimewa.</p>
     <form class="auth-fields" @submit.prevent="submit">
       <label class="field-label">Nama lengkap

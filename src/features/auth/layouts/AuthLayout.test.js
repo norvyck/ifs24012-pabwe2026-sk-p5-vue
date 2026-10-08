@@ -13,7 +13,7 @@ describe('AuthLayout', () => {
       },
     })
 
-    expect(page.get('h1').text()).toContain('Temukan sesuatu yang istimewa')
+    expect(page.get('h2').text()).toContain('Temukan sesuatu yang istimewa')
     expect(page.get('[data-test="auth-page"]').exists()).toBe(true)
     expect(page.text()).toContain('BIDLY MARKETPLACE')
     expect(page.findAll('.auth-story__stats > div')).toHaveLength(3)

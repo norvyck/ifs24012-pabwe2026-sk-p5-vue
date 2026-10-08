@@ -7,7 +7,7 @@
       </RouterLink>
       <div class="auth-story__copy">
         <span class="auth-kicker"><Sparkles :size="15" /> LELANG DENGAN CERITA</span>
-        <h1>Temukan sesuatu yang <em>istimewa.</em></h1>
+        <h2>Temukan sesuatu yang <em>istimewa.</em></h2>
         <p>Barang yang tepat selalu punya cerita. Temukan milikmu, dan berikan tawaran terbaik.</p>
         <div class="auth-story__stats">
           <div><strong>01</strong><span>Temukan barang favorit</span></div>
