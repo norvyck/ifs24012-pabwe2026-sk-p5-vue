@@ -42,6 +42,9 @@ describe('authentication pages', () => {
 
   it('requires both login fields before calling the API', async () => {
     const page = mountPage(LoginPage)
+    expect(page.get('#login-email-input').attributes('type')).toBe('email')
+    expect(page.get('#login-password-input').attributes('type')).toBe('password')
+    expect(page.get('#login-submit-button').attributes('type')).toBe('submit')
     await page.get('form').trigger('submit')
     expect(page.get('[role="alert"]').text()).toContain('Masukkan email')
     expect(authApi.login).not.toHaveBeenCalled()

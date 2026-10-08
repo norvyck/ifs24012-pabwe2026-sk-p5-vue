@@ -37,13 +37,13 @@ async function submit() {
     <p class="auth-card__subtitle">Lanjutkan berburu barang istimewa.</p>
     <form class="auth-fields" @submit.prevent="submit">
       <label class="field-label">Alamat email
-        <span class="input-with-icon"><Mail :size="17" /><input v-model="email" type="email" autocomplete="email" placeholder="nama@email.com" required /></span>
+        <span class="input-with-icon"><Mail :size="17" /><input id="login-email-input" v-model="email" type="email" autocomplete="email" placeholder="nama@email.com" required /></span>
       </label>
       <label class="field-label">Kata sandi
-        <span class="input-with-icon"><LockKeyhole :size="17" /><input v-model="password" :type="showPassword ? 'text' : 'password'" autocomplete="current-password" placeholder="Masukkan kata sandi" required /><button type="button" :aria-label="showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'" @click="showPassword = !showPassword"><EyeOff v-if="showPassword" :size="17" /><Eye v-else :size="17" /></button></span>
+        <span class="input-with-icon"><LockKeyhole :size="17" /><input id="login-password-input" v-model="password" :type="showPassword ? 'text' : 'password'" autocomplete="current-password" placeholder="Masukkan kata sandi" required /><button type="button" :aria-label="showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'" @click="showPassword = !showPassword"><EyeOff v-if="showPassword" :size="17" /><Eye v-else :size="17" /></button></span>
       </label>
       <p v-if="error" class="form-error" role="alert">{{ error }}</p>
-      <button class="button button--primary button--full" type="submit" :disabled="auth.isLoading">
+      <button id="login-submit-button" class="button button--primary button--full" type="submit" :disabled="auth.isLoading">
         <LoaderCircle v-if="auth.isLoading" class="spin" :size="18" />
         {{ auth.isLoading ? 'Sedang masuk...' : 'Masuk ke Bidly' }}
         <ArrowRight v-if="!auth.isLoading" :size="17" />
