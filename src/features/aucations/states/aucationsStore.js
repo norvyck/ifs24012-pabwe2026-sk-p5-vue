@@ -1,13 +1,39 @@
 import { defineStore } from 'pinia'
 import { aucationApi } from '../api/aucationApi'
 
+const mutationFlags = [
+  ['isAucationAdd', 'isAucationAdded'],
+  ['isAucationChange', 'isAucationChanged'],
+  ['isAucationChangeCover', 'isAucationChangedCover'],
+  ['isAucationDelete', 'isAucationDeleted'],
+  ['isBidAdd', 'isBidAdded'],
+  ['isBidDelete', 'isBidDeleted'],
+  ['isAucationDeleteAll', 'isAucationDeletedAll'],
+]
+
+async function trackMutation(store, loadingFlag, completedFlag, operation) {
+  store[loadingFlag] = true
+  store[completedFlag] = false
+  try {
+    const result = await operation()
+    store[completedFlag] = true
+    return result
+  } finally {
+    store[loadingFlag] = false
+  }
+}
+
 export const useAucationsStore = defineStore('aucations', {
   state: () => ({
     aucations: [],
     aucation: null,
     isLoading: false,
-    isSaving: false,
+    ...Object.fromEntries(mutationFlags.flatMap(([loading, completed]) => [[loading, false], [completed, false]])),
   }),
+  getters: {
+    isAucation: (state) => state.isLoading,
+    isSaving: (state) => mutationFlags.some(([loading]) => state[loading]),
+  },
   actions: {
     async fetchAucations(filters = {}) {
       this.isLoading = true
@@ -28,60 +54,25 @@ export const useAucationsStore = defineStore('aucations', {
       }
     },
     async addAucation(data) {
-      this.isSaving = true
-      try {
-        return await aucationApi.add(data)
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isAucationAdd', 'isAucationAdded', () => aucationApi.add(data))
     },
     async updateAucation(id, data) {
-      this.isSaving = true
-      try {
-        return await aucationApi.update(id, data)
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isAucationChange', 'isAucationChanged', () => aucationApi.update(id, data))
     },
     async uploadCover(id, file) {
-      this.isSaving = true
-      try {
-        return await aucationApi.uploadCover(id, file)
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isAucationChangeCover', 'isAucationChangedCover', () => aucationApi.uploadCover(id, file))
     },
     async deleteAucation(id) {
-      this.isSaving = true
-      try {
-        return await aucationApi.delete(id)
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isAucationDelete', 'isAucationDeleted', () => aucationApi.delete(id))
     },
     async addBid(id, bid) {
-      this.isSaving = true
-      try {
-        return await aucationApi.addBid(id, bid)
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isBidAdd', 'isBidAdded', () => aucationApi.addBid(id, bid))
     },
     async deleteBid(id) {
-      this.isSaving = true
-      try {
-        return await aucationApi.deleteBid(id)
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isBidDelete', 'isBidDeleted', () => aucationApi.deleteBid(id))
     },
     async deleteAllAucations() {
-      this.isSaving = true
-      try {
-        return await aucationApi.deleteAll()
-      } finally {
-        this.isSaving = false
-      }
+      return trackMutation(this, 'isAucationDeleteAll', 'isAucationDeletedAll', () => aucationApi.deleteAll())
     },
   },
 })

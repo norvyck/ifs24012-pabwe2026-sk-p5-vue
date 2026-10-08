@@ -3,6 +3,9 @@ import { userApi } from '../api/userApi'
 
 export const useUsersStore = defineStore('users', {
   state: () => ({ users: [], profile: null, isLoading: false, isSaving: false }),
+  getters: {
+    user: (state) => state.profile,
+  },
   actions: {
     async fetchUsers() {
       this.isLoading = true

@@ -14,14 +14,17 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: getAccessToken(),
     user: storedUser(),
-    isLoading: false,
+    isAuthLogin: false,
+    isAuthRegister: false,
+    isAuthLogout: false,
   }),
   getters: {
     isAuthenticated: (state) => Boolean(state.token),
+    isLoading: (state) => state.isAuthLogin || state.isAuthRegister || state.isAuthLogout,
   },
   actions: {
     async login(credentials) {
-      this.isLoading = true
+      this.isAuthLogin = true
       try {
         const result = await authApi.login(credentials)
         this.token = result.token
@@ -30,18 +33,19 @@ export const useAuthStore = defineStore('auth', {
         localStorage.setItem('bidly_user', JSON.stringify(result.user))
         return result.user
       } finally {
-        this.isLoading = false
+        this.isAuthLogin = false
       }
     },
     async register(details) {
-      this.isLoading = true
+      this.isAuthRegister = true
       try {
         return await authApi.register(details)
       } finally {
-        this.isLoading = false
+        this.isAuthRegister = false
       }
     },
     async logout() {
+      this.isAuthLogout = true
       try {
         if (this.token) await authApi.logout()
       } finally {
@@ -49,6 +53,7 @@ export const useAuthStore = defineStore('auth', {
         this.user = null
         putAccessToken('')
         localStorage.removeItem('bidly_user')
+        this.isAuthLogout = false
       }
     },
     updateUser(user) {

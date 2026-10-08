@@ -30,6 +30,7 @@ describe('aucationsStore', () => {
     expect(store.aucations.map((item) => item.id)).toEqual([1])
     expect(store.aucation.id).toBe(detail.id)
     expect(store.isLoading).toBe(false)
+    expect(store.isAucation).toBe(false)
   })
 
   it('resets loading state when reads fail', async () => {
@@ -56,12 +57,40 @@ describe('aucationsStore', () => {
     await expect(store[actionName](...args)).resolves.toEqual({ status: 'success' })
     expect(aucationApi[apiName]).toHaveBeenCalledWith(...args)
     expect(store.isSaving).toBe(false)
+    const completionFlags = {
+      addAucation: ['isAucationAdd', 'isAucationAdded'],
+      updateAucation: ['isAucationChange', 'isAucationChanged'],
+      uploadCover: ['isAucationChangeCover', 'isAucationChangedCover'],
+      deleteAucation: ['isAucationDelete', 'isAucationDeleted'],
+      addBid: ['isBidAdd', 'isBidAdded'],
+      deleteBid: ['isBidDelete', 'isBidDeleted'],
+      deleteAllAucations: ['isAucationDeleteAll', 'isAucationDeletedAll'],
+    }
+    const [loadingFlag, completedFlag] = completionFlags[actionName]
+    expect(store[loadingFlag]).toBe(false)
+    expect(store[completedFlag]).toBe(true)
   })
 
   it('resets saving state after a mutation fails', async () => {
     aucationApi.add.mockRejectedValue(new Error('write failed'))
     const store = useAucationsStore()
     await expect(store.addAucation({})).rejects.toThrow('write failed')
+    expect(store.isSaving).toBe(false)
+    expect(store.isAucationAdd).toBe(false)
+    expect(store.isAucationAdded).toBe(false)
+  })
+
+  it('exposes the operation loading flag while a mutation is pending', async () => {
+    let finishAdd
+    aucationApi.add.mockImplementationOnce(() => new Promise((resolve) => { finishAdd = resolve }))
+    const store = useAucationsStore()
+    const addPromise = store.addAucation({ title: 'Camera' })
+    expect(store.isAucationAdd).toBe(true)
+    expect(store.isSaving).toBe(true)
+    finishAdd({ status: 'success' })
+    await addPromise
+    expect(store.isAucationAdd).toBe(false)
+    expect(store.isAucationAdded).toBe(true)
     expect(store.isSaving).toBe(false)
   })
 })

@@ -28,6 +28,7 @@ describe('usersStore', () => {
     expect(resultProfile.id).toBe(1)
     expect(store.users.map((user) => user.id)).toEqual([1])
     expect(store.profile.id).toBe(profile.id)
+    expect(store.user).toEqual(profile)
     expect(store.isLoading).toBe(false)
   })
 
