@@ -1,25 +1,28 @@
-import Swal from 'sweetalert2'
+let dialogPromise
 
-const dialog = Swal.mixin({
-  customClass: {
-    popup: 'bidly-alert',
-    confirmButton: 'bidly-alert-confirm',
-    cancelButton: 'bidly-alert-cancel',
-  },
-  buttonsStyling: false,
-})
+function getDialog() {
+  dialogPromise ??= import('sweetalert2').then(({ default: Swal }) => Swal.mixin({
+    customClass: {
+      popup: 'bidly-alert',
+      confirmButton: 'bidly-alert-confirm',
+      cancelButton: 'bidly-alert-cancel',
+    },
+    buttonsStyling: false,
+  }))
+  return dialogPromise
+}
 
 export function showSuccessDialog(title, text = '') {
-  return dialog.fire({ icon: 'success', title, text, confirmButtonText: 'Mengerti' })
+  return getDialog().then((dialog) => dialog.fire({ icon: 'success', title, text, confirmButtonText: 'Mengerti' }))
 }
 
 export function showErrorDialog(error, title = 'Terjadi kesalahan') {
   const message = typeof error === 'string' ? error : error?.message || 'Silakan coba lagi.'
-  return dialog.fire({ icon: 'error', title, text: message, confirmButtonText: 'Tutup' })
+  return getDialog().then((dialog) => dialog.fire({ icon: 'error', title, text: message, confirmButtonText: 'Tutup' }))
 }
 
 export function showConfirmDialog(title, text, confirmButtonText = 'Ya, lanjutkan') {
-  return dialog.fire({
+  return getDialog().then((dialog) => dialog.fire({
     icon: 'warning',
     title,
     text,
@@ -27,7 +30,7 @@ export function showConfirmDialog(title, text, confirmButtonText = 'Ya, lanjutka
     confirmButtonText,
     cancelButtonText: 'Batal',
     reverseButtons: true,
-  })
+  }))
 }
 
 export function formatRupiah(value) {
