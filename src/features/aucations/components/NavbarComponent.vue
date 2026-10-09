@@ -24,7 +24,7 @@ const links = [
     <div class="topbar__crumb"><span>Marketplace</span><span class="crumb-separator">/</span><strong>{{ links.find((link) => link.name === route.name)?.label || 'Detail lelang' }}</strong></div>
     <div class="topbar__actions">
       <span class="topbar__welcome">Selamat datang kembali, <strong>{{ userName.split(' ')[0] }}</strong></span>
-      <RouterLink class="topbar-avatar" :to="{ name: 'profile' }" :title="userName">
+      <RouterLink class="topbar-avatar" :to="{ name: 'profile' }" :aria-label="`Buka profil ${userName}`" :title="userName">
         <img v-if="photo" :src="photo" :alt="`Foto profil ${userName}`" />
         <span v-else>{{ initials }}</span>
       </RouterLink>

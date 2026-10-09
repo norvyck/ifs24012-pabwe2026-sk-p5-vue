@@ -1,7 +1,7 @@
 <template>
   <main class="auth-shell">
     <section class="auth-story">
-      <RouterLink class="brand brand--light" :to="{ name: 'login' }">
+      <RouterLink class="brand brand--light" :to="{ name: 'login' }" aria-label="Bidly, kembali ke halaman masuk">
         <span class="brand-mark"><Gavel :size="19" :stroke-width="2.6" /></span>
         <span>bidly<span class="brand-period">.</span></span>
       </RouterLink>

@@ -106,6 +106,15 @@ describe('auction detail page', () => {
     page.unmount()
   })
 
+  it('keeps a level-one heading available while auction details are loading', async () => {
+    aucationApi.getById.mockReturnValue(new Promise(() => {}))
+    const page = mountPage()
+
+    expect(page.get('.detail-skeleton').attributes('role')).toBe('status')
+    expect(page.get('.detail-skeleton h1').text()).toBe('Memuat detail lelang')
+    page.unmount()
+  })
+
   it('allows an owner to open edit actions and delete the auction', async () => {
     const page = mountPage()
     useAuthStore().user = { id: 4, name: 'Ayu' }
